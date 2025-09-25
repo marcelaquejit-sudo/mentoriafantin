@@ -1,0 +1,12 @@
+# Robots.txt para www.mentoriafantin.com.br
+User-agent: *
+Allow: /
+
+# Bloquear diretórios sensíveis (se existirem)
+Disallow: /admin/
+Disallow: /login/
+Disallow: /config/
+Disallow: /cgi-bin/
+
+# Sitemap
+Sitemap: https://www.mentoriafantin.com.br/sitemap.xml
