@@ -131,35 +131,71 @@ body::before {
     .btn-login:hover{ filter:brightness(1.05); }
     .btn-login:active{ transform:translateY(1px); }
 
-    /* Burger (3 linhas) */
-    .burger {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 42px;
-    height: 38px;
-    padding: 0;
-    border-radius: 10px;
-    cursor: pointer;
-    border: 1px solid #ffffff18;
-    background: #121216;
-    flex-direction: column; /* garante que as linhas fiquem verticais */
-    gap: 5px; /* espaço entre as linhas */
-    }
+    /* ====== Burger alinhado ====== */
+.burger{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:44px; height:40px; border-radius:12px; cursor:pointer;
+  border:1px solid #ffffff18; background:#121216;
+  transition:background .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+.burger:hover{ background:#15151a; border-color:#ffffff24; box-shadow:0 6px 20px rgba(0,0,0,.25); }
+.burger:focus-visible{ outline:2px solid #e11d2e; outline-offset:2px; }
+.burger span{
+  display:block; width:20px; height:2px; background:#fff; border-radius:2px;
+}
+.burger .l2{ margin:5px 0; } /* espaçamento simétrico */
 
-    .burger span {
-    display: block;
-    width: 20px;
-    height: 2px;
-    background: #fff;
-    border-radius: 2px;
-    }
+/* ====== Backdrop + painel (usando hidden + classe .is-open p/ animar) ====== */
+.menu-backdrop{
+  position:fixed; inset:0; z-index:39;
+  background:rgba(0,0,0,.55);
+  opacity:0; pointer-events:none;
+  transition:opacity .2s ease;
+}
+/* quando abrir, JS remove hidden e adiciona .is-open */
+.menu-backdrop.is-open{ opacity:1; pointer-events:auto; }
 
-    .burger:focus-visible {
-    outline: 2px solid #e11d2e;
-    outline-offset: 2px;
-    }
+/* painel */
+.menu-panel{
+  position:fixed; top:0; right:0; bottom:0; z-index:40;
+  width:min(320px, 86vw);
+  background:#0b0b0fe6; backdrop-filter: blur(10px);
+  border-left:1px solid #ffffff14;
 
+  /* estado inicial (quando hidden for removido) */
+  transform: translateX(10px);
+  opacity:0; pointer-events:none;
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+/* estado aberto */
+.menu-panel.is-open{
+  transform: translateX(0);
+  opacity:1; pointer-events:auto;
+}
+
+/* cabeça do menu */
+.menu-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 16px; border-bottom:1px solid #ffffff12;
+}
+.menu-head strong{ font:700 15px/1.2 Inter, system-ui, Arial, sans-serif; color:#fff; }
+.menu-close{
+  width:34px; height:34px; border-radius:10px; border:1px solid #ffffff24;
+  background:#141418; color:#fff; cursor:pointer;
+}
+.menu-close:hover{ background:#19191f; }
+
+/* links do menu */
+.menu-list{ list-style:none; padding:12px 10px; margin:0; display:grid; gap:6px; }
+.menu-list a{
+  display:block; padding:10px 10px; color:#e7e7ec; text-decoration:none;
+  border-radius:10px;
+}
+.menu-list a:hover{ background:#15151a; color:#fff; }
+
+/* trava o scroll quando o menu estiver aberto */
+.no-scroll{ overflow:hidden; }
     /* BACKDROP COM BLUR */
     .menu-backdrop{
     position:fixed; inset:0; background:rgba(0,0,0,.45);
@@ -1694,43 +1730,82 @@ body::before {
 </script>
 
 <script>
-(function(){
-  const burger   = document.querySelector('.burger');
-  const panel    = document.getElementById('menu-panel');
-  const backdrop = document.querySelector('.menu-backdrop');
-  const closeBtn = document.querySelector('.menu-close');
-  const links    = panel.querySelectorAll('a');
+  (function(){
+    const burger    = document.querySelector('.burger');
+    const panel     = document.getElementById('menu-panel');
+    const backdrop  = document.querySelector('.menu-backdrop');
+    const btnClose  = panel.querySelector('.menu-close');
 
-  function openMenu(){
-    panel.hidden = false; backdrop.hidden = false;
-    requestAnimationFrame(()=>{
-      panel.classList.add('is-open');
-      backdrop.classList.add('is-open');
+    let isOpen = false;
+
+    function openMenu(){
+      if(isOpen) return;
+      isOpen = true;
+
+      // remove hidden para poder animar
+      panel.hidden = false;
+      backdrop.hidden = false;
+
+      // pequena espera p/ o browser aplicar display antes da transição
+      requestAnimationFrame(()=>{
+        panel.classList.add('is-open');
+        backdrop.classList.add('is-open');
+      });
+
+      burger.setAttribute('aria-expanded','true');
+      panel.setAttribute('aria-hidden','false');
+      document.body.classList.add('no-scroll');
+    }
+
+    function closeMenu(){
+      if(!isOpen) return;
+      isOpen = false;
+
+      panel.classList.remove('is-open');
+      backdrop.classList.remove('is-open');
+
+      burger.setAttribute('aria-expanded','false');
+      panel.setAttribute('aria-hidden','true');
+      document.body.classList.remove('no-scroll');
+
+      // espera a transição para aplicar hidden
+      const onEnd = ()=> {
+        panel.hidden = true;
+        backdrop.hidden = true;
+        panel.removeEventListener('transitionend', onEnd);
+      };
+      panel.addEventListener('transitionend', onEnd);
+    }
+
+    // Toggle
+    burger.addEventListener('click', (e)=>{
+      e.preventDefault();
+      isOpen ? closeMenu() : openMenu();
     });
-    burger.setAttribute('aria-expanded','true');
-    panel.setAttribute('aria-hidden','false');
-    (closeBtn || panel).focus();
-  }
-  function closeMenu(){
-    panel.classList.remove('is-open');
-    backdrop.classList.remove('is-open');
-    burger.setAttribute('aria-expanded','false');
-    panel.setAttribute('aria-hidden','true');
-    setTimeout(()=>{ panel.hidden = true; backdrop.hidden = true; }, 220);
-    burger.focus();
-  }
 
-  burger.addEventListener('click', ()=>{
-    const open = burger.getAttribute('aria-expanded') === 'true';
-    open ? closeMenu() : openMenu();
-  });
-  closeBtn.addEventListener('click', closeMenu);
-  backdrop.addEventListener('click', closeMenu);
-  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeMenu(); });
-  links.forEach(a => a.addEventListener('click', closeMenu));
-})();
+    // ✕ e backdrop
+    btnClose.addEventListener('click', closeMenu);
+    backdrop.addEventListener('click', closeMenu);
+
+    // fecha ao clicar nos links
+    panel.addEventListener('click', (e)=>{
+      if(e.target.closest('.menu-list a')) closeMenu();
+    });
+
+    // Esc fecha
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'Escape') closeMenu();
+    });
+
+    // em telas grandes, garante fechado
+    window.addEventListener('resize', ()=>{
+      if(window.innerWidth >= 1024) closeMenu();
+    });
+
+    // garante estado inicial fechado
+    closeMenu();
+  })();
 </script>
-
 
 </body>
 </html>
