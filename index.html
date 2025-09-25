@@ -101,37 +101,20 @@ body::before {
 .wrap {
   width: min(1100px, 92%);
   margin: 0 auto;
+}
+
+  /* Botão login */
+.btn-login{
+  padding:10px 16px; border-radius:10px; color:#fff; text-decoration:none;
+  font:700 14px/1 Inter, system-ui; letter-spacing:.2px;
+  background:linear-gradient(90deg,#e11d2e,#b90f1f);
+  box-shadow:0 10px 24px rgba(225,29,46,.25);
+  transition:filter .2s ease, transform .08s ease;
 }
+.btn-login:hover{ filter:brightness(1.05); }
+.btn-login:active{ transform:translateY(1px); }
 
-
-    /* ===== NAVBAR ===== */
-    /* ====== HEADER / NAV ====== */
-    .site-header{
-    position:sticky; top:0; z-index:100;
-    background:#0b0b0fdd; backdrop-filter:blur(8px);
-    border-bottom:1px solid #ffffff12;
-    }
-    .nav-bar{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:12px 0;
-    }
-    .nav-logo img{ height:34px; width:auto; display:block; }
-
-    /* Ações à direita */
-    .nav-actions{ display:flex; align-items:center; gap:10px; }
-
-    /* Botão login */
-    .btn-login{
-    padding:10px 16px; border-radius:10px; color:#fff; text-decoration:none;
-    font:700 14px/1 Inter, system-ui; letter-spacing:.2px;
-    background:linear-gradient(90deg,#e11d2e,#b90f1f);
-    box-shadow:0 10px 24px rgba(225,29,46,.25);
-    transition:filter .2s ease, transform .08s ease;
-    }
-    .btn-login:hover{ filter:brightness(1.05); }
-    .btn-login:active{ transform:translateY(1px); }
-
-    /* ====== Burger alinhado ====== */
+/* ====== Burger ====== */
 .burger{
   display:inline-flex; align-items:center; justify-content:center;
   width:44px; height:40px; border-radius:12px; cursor:pointer;
@@ -140,101 +123,68 @@ body::before {
 }
 .burger:hover{ background:#15151a; border-color:#ffffff24; box-shadow:0 6px 20px rgba(0,0,0,.25); }
 .burger:focus-visible{ outline:2px solid #e11d2e; outline-offset:2px; }
-.burger span{
-  display:block; width:20px; height:2px; background:#fff; border-radius:2px;
-}
+.burger span{ display:block; width:20px; height:2px; background:#fff; border-radius:2px; }
 .burger .l2{ margin:5px 0; } /* espaçamento simétrico */
 
-/* ====== Backdrop + painel (usando hidden + classe .is-open p/ animar) ====== */
+/* ====== Backdrop (único) ====== */
 .menu-backdrop{
-  position:fixed; inset:0; z-index:39;
-  background:rgba(0,0,0,.55);
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.55);                /* escurece */
+  backdrop-filter:blur(6px);                  /* blur */
   opacity:0; pointer-events:none;
-  transition:opacity .2s ease;
+  transition:opacity .25s ease;
+  z-index:999;
 }
-/* quando abrir, JS remove hidden e adiciona .is-open */
 .menu-backdrop.is-open{ opacity:1; pointer-events:auto; }
 
-/* painel */
+/* ====== Painel (único) ====== */
 .menu-panel{
-  position:fixed; top:0; right:0; bottom:0; z-index:40;
+  position:fixed; top:0; right:0; bottom:0;
   width:min(320px, 86vw);
-  background:#0b0b0fe6; backdrop-filter: blur(10px);
+  background:#0b0b0fe6;                       /* com alpha p/ blur funcionar */
+  backdrop-filter: blur(10px);
   border-left:1px solid #ffffff14;
+  box-shadow:-24px 0 48px rgba(0,0,0,.5);
 
-  /* estado inicial (quando hidden for removido) */
+  /* estado inicial antes da animação */
   transform: translateX(10px);
   opacity:0; pointer-events:none;
-  transition: opacity .2s ease, transform .2s ease;
-}
 
-/* estado aberto */
+  transition: opacity .2s ease, transform .2s ease;
+  z-index:1000;
+  display:flex; flex-direction:column;
+}
 .menu-panel.is-open{
   transform: translateX(0);
   opacity:1; pointer-events:auto;
 }
 
-/* cabeça do menu */
+/* Cabeçalho do menu */
 .menu-head{
   display:flex; align-items:center; justify-content:space-between;
-  padding:14px 16px; border-bottom:1px solid #ffffff12;
+  padding:16px 18px; border-bottom:1px solid #ffffff14; color:#fff;
+  font:800 14px/1 Inter, system-ui;
 }
-.menu-head strong{ font:700 15px/1.2 Inter, system-ui, Arial, sans-serif; color:#fff; }
 .menu-close{
-  width:34px; height:34px; border-radius:10px; border:1px solid #ffffff24;
-  background:#141418; color:#fff; cursor:pointer;
+  border:1px solid #ffffff18; background:#141418; color:#fff;
+  width:36px; height:32px; border-radius:8px; cursor:pointer;
 }
 .menu-close:hover{ background:#19191f; }
 
-/* links do menu */
-.menu-list{ list-style:none; padding:12px 10px; margin:0; display:grid; gap:6px; }
+/* Links do menu */
+.menu-list{ list-style:none; margin:0; padding:12px 10px 20px; display:grid; gap:6px; }
 .menu-list a{
-  display:block; padding:10px 10px; color:#e7e7ec; text-decoration:none;
-  border-radius:10px;
+  display:block; padding:12px; border-radius:10px;
+  color:#e9e9ee; text-decoration:none; font:600 15px/1.2 Inter, sans-serif;
 }
 .menu-list a:hover{ background:#15151a; color:#fff; }
 
-/* trava o scroll quando o menu estiver aberto */
+/* Trava scroll quando aberto */
 .no-scroll{ overflow:hidden; }
-    /* BACKDROP COM BLUR */
-    .menu-backdrop{
-    position:fixed; inset:0; background:rgba(0,0,0,.45);
-    backdrop-filter:blur(6px);
-    opacity:0; transition:opacity .25s ease;
-    z-index:999;
-    }
-    .menu-backdrop.is-open{ opacity:1; }
 
-    /* MENU PAINEL */
-    .menu-panel{
-    position:fixed; top:0; right:0; height:100dvh; width:min(86vw,360px);
-    background:#0c0c0f; border-left:1px solid #ffffff18;
-    box-shadow:-24px 0 48px rgba(0,0,0,.5);
-    transform:translateX(100%); transition:transform .28s ease;
-    z-index:1000; display:flex; flex-direction:column;
-    }
-    .menu-panel.is-open{ transform:translateX(0); }
+/* Opcional: se o seu header for sticky, garanta que ele fique acima do conteúdo */
+header{ z-index:1001; position:sticky; top:0; }
 
-    .menu-head{
-    display:flex; align-items:center; justify-content:space-between;
-    padding:16px 18px; border-bottom:1px solid #ffffff14; color:#fff;
-    font:800 14px/1 Inter, system-ui;
-    }
-    .menu-close{
-    border:1px solid #ffffff18; background:#141418; color:#fff;
-    width:36px; height:32px; border-radius:8px; cursor:pointer;
-    }
-    .menu-list{ list-style:none; margin:0; padding:12px 10px 20px; display:grid; gap:4px; }
-    .menu-list a{
-    display:block; padding:12px 12px; border-radius:10px;
-    color:#e9e9ee; text-decoration:none; font:600 15px/1.2 Inter, sans-serif;
-    }
-    .menu-list a:hover{ background:#15151a; color:#fff; }
-
-    /* (Opcional) esconder burger no desktop e mostrar no mobile */
-    @media (min-width: 1024px){
-    /* se quiser manter APENAS o burger em todas as telas, remova este bloco */
-    }
 
 
 
