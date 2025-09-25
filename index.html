@@ -791,6 +791,153 @@ body::before {
   transform:translateY(-2px);
   box-shadow:0 8px 22px rgba(225,29,46,.45);
 }
+/* =========================
+   AJUSTES MOBILE GERAIS
+   ========================= */
+@media (max-width: 1024px){
+  .wrap{ width: min(100%, 94%); }
+  .site-header .nav-bar{ padding: 12px 0; }
+  .nav-logo img{ height: 30px; }
+  .btn-login{ padding: 9px 14px; font-size: 13px; }
+  .burger{ width: 40px; height: 36px; }
+}
+
+@media (max-width: 768px){
+  /* tipografia base menor */
+  body{ font-size: 16px; }
+  .hero{ padding: 56px 0 32px; }
+  .hero h1{ font-size: clamp(24px, 7vw, 30px); }
+  .hero .media-card{ border-radius: 16px; margin-bottom: 14px; }
+  .hero p{ padding: 0 8px; font-size: 14px; line-height: 1.6; }
+  .btn-xxl, .cta{ padding: 12px 20px; border-radius: 12px; font-size: 14px; }
+
+  /* header: só burger + login à direita já está OK. 
+     Se quiser esconder um menu horizontal antigo, garanta que não aparece: */
+  .nav-menu-desktop{ display: none !important; }
+}
+
+/* =========================
+   DIFERENCIAIS (accordion)
+   ========================= */
+@media (max-width: 768px){
+  .features{ padding: 28px 0; }
+  .feat-head h2{ font-size: clamp(18px, 5.5vw, 24px); }
+  .expc-grid{ column-count: 1; max-width: 680px; }
+  .expc-card{ border-radius: 14px; }
+  .expc-head{ padding: 12px 14px; gap: 10px; }
+  .expc-icon{ width: 32px; height: 32px; border-radius: 10px; }
+  .expc-meta h3{ font-size: 15px; }
+  .expc-teaser{ font-size: 13px; }
+  .expc-body{ font-size: 14px; padding: 0 14px 12px; }
+}
+
+/* =========================
+   FEEDBACKS (stories)
+   ========================= */
+@media (max-width: 768px){
+  .feedbacks{ padding: 40px 0; }
+  .feedbacks .section-title{ margin-bottom: 18px; }
+  .marquee{ margin-bottom: 16px; }
+  .marquee-track{ gap: 14px; padding: 0 4vw; }
+  .marquee img{ width: 120px; border-radius: 12px; box-shadow: 0 5px 12px rgba(0,0,0,.45); }
+  .fade{ width: 60px; }
+}
+
+/* =========================
+   CTA (agressiva + mid)
+   ========================= */
+@media (max-width: 768px){
+  .cta-blast, .cta-mid{ padding: 56px 0 60px; }
+  .cta-title{ font-size: clamp(20px, 7vw, 28px); line-height: 1.15; }
+  .cta-sub{ font-size: 14px; line-height: 1.6; padding: 0 10px; }
+  .cta-actions{ gap: 10px; }
+  .cta-actions .btn-xxl{ width: 100%; justify-content: center; }
+}
+
+/* =========================
+   MENTOR (foto esquerda, texto direita)
+   ========================= */
+@media (max-width: 960px){
+  .mentor-v2, .mentorv2, .mentorv2-title{ /* se houver variações de classe */
+    /* nada aqui além de garantir colunas empilhadas */
+  }
+  .mentorv2-grid{ grid-template-columns: 1fr; gap: 16px; }
+  .mentorv2-photo{ max-width: 420px; }
+  .mentorv2-text{ text-align: left; }
+  .mentorv2-text p{ font-size: 14px; line-height: 1.65; }
+  .mentorv2-actions{ gap: 10px; }
+  .mentorv2-actions .btn-xxl{ width: 100%; justify-content: center; }
+}
+
+/* =========================
+   PROVA REAL – carrossel TAF
+   ========================= */
+@media (max-width: 768px){
+  .taf-proof{ padding: 48px 0; }
+  .taf-title{ font-size: clamp(18px, 6vw, 24px); }
+  .taf-sub{ font-size: 14px; padding: 0 8px; }
+  .taf-slide{ border-radius: 12px; }
+  .taf-video{ aspect-ratio: 16/9; }
+  .taf-nav{ width: 36px; height: 36px; font-size: 22px; }
+  .taf-dots button{ width: 8px; height: 8px; }
+}
+
+/* =========================
+   TREINO QUE APROVA (grid)
+   ========================= */
+@media (max-width: 1100px){ .train-grid{ grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 820px){ .train-grid{ grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 540px){
+  .train-proof{ padding: 48px 0 60px; }
+  .train-grid{ grid-template-columns: 1fr; }
+  .train-card{ padding: 10px; border-radius: 14px; }
+  .train-card .media{ border-radius: 10px; aspect-ratio: 4/5; }
+  .train-card h3{ font-size: 15px; }
+  .train-card p{ font-size: 13.5px; }
+  .play-toggle{ width: 34px; height: 34px; }
+}
+
+/* =========================
+   LINHA DO TEMPO
+   ========================= */
+@media (max-width: 900px){
+  .timeline{ padding: 52px 0; }
+  .tl-title{ font-size: clamp(18px, 6vw, 26px); }
+  .tl-sub{ font-size: 14px; }
+  .tl-rail::before{ left: 12px; transform: none; }
+  .tl-item{ grid-template-columns: 1fr; gap: 12px; }
+  .tl-text{ text-align: left; }
+  .tl-media{ border-radius: 14px; }
+  .tl-media img, .tl-media video{ aspect-ratio: 16/9; }
+  .tl-year{ font-size: 16px; }
+}
+
+/* =========================
+   FOOTER
+   ========================= */
+@media (max-width: 900px){
+  .site-footer{ padding: 44px 0 24px; }
+  .footer-grid{ grid-template-columns: 1fr; gap: 22px; }
+  .footer-brand{ align-items: center; }
+  .footer-logo{ width: 160px; }
+  .footer-nav h4, .footer-contact h4{ font-size: 14px; }
+  .footer-copy{ margin-top: 28px; padding-top: 16px; font-size: 12.5px; }
+  .footer-copy .dev-credit{ gap: 6px; }
+}
+
+/* =========================
+   ACESSIBILIDADE & TOUCH
+   ========================= */
+/* Evita efeitos hover fortes em touch */
+@media (hover: none){
+  .expc-card:hover{ transform:none; box-shadow:0 10px 26px rgba(0,0,0,.45); }
+  .btn-fire:hover{ transform:none; }
+}
+
+/* Respeita quem prefere menos animação */
+@media (prefers-reduced-motion: reduce){
+  *{ animation: none !important; transition: none !important; }
+}
 
   </style>
 
@@ -1588,3 +1735,4 @@ body::before {
 
 </body>
 </html>
+
