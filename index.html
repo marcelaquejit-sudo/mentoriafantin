@@ -103,69 +103,106 @@ body::before {
   margin: 0 auto;
 }
 
-  /* ===== HEADER ===== */
+  /* ===== HEADER (logo à esquerda, ações à direita) ===== */
 .site-header{
-  position: sticky; /* cola no topo, se quiser que role junto só remova */
+  position: sticky;
   top: 0; left: 0; right: 0;
   z-index: 1001;
   background:#0b0b0fd0;
   backdrop-filter: blur(6px);
   border-bottom:1px solid #ffffff12;
 }
-
 .nav-bar{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 64px;
-  padding: 0 16px;
+  display:flex; align-items:center; justify-content:space-between;
+  height:64px; padding:0 16px;
 }
+.nav-logo img{ display:block; height:36px; width:auto; }
 
-/* LOGO */
-.nav-logo img{
-  display:block;
-  height: 36px; 
-  width:auto;
-}
+/* Ações à direita */
+.nav-actions{ display:flex; align-items:center; gap:12px; }
 
-/* AÇÕES (direita) */
-.nav-actions{
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-/* BOTÃO LOGIN */
+/* Botão Login */
 .btn-login{
-  padding:10px 16px; border-radius:10px; color:#fff; text-decoration:none;
-  font:700 14px/1 Inter, system-ui; letter-spacing:.2px;
+  padding:10px 16px; border-radius:10px; white-space:nowrap;
+  color:#fff; text-decoration:none;
+  font:700 14px/1 Inter, system-ui;
   background:linear-gradient(90deg,#e11d2e,#b90f1f);
   box-shadow:0 10px 24px rgba(225,29,46,.25);
-  transition:filter .2s ease, transform .08s ease;
-  white-space: nowrap;
+  transition:filter .2s, transform .08s;
 }
-.btn-login:hover{ filter:brightness(1.05); }
-.btn-login:active{ transform:translateY(1px); }
+.btn-login:hover{ filter:brightness(1.05) }
+.btn-login:active{ transform:translateY(1px) }
 
-/* ===== BURGER ===== */
+/* ===== Burger ===== */
 .burger{
   display:flex; flex-direction:column; justify-content:center; align-items:center;
   width:44px; height:40px; border-radius:12px; cursor:pointer;
   border:1px solid #ffffff18; background:#121216;
-  transition:background .2s ease, border-color .2s ease, box-shadow .2s ease;
+  transition:background .2s, border-color .2s, box-shadow .2s;
 }
-.burger:hover{ background:#15151a; border-color:#ffffff24; box-shadow:0 6px 20px rgba(0,0,0,.25); }
-.burger:focus-visible{ outline:2px solid #e11d2e; outline-offset:2px; }
+.burger:hover{ background:#15151a; border-color:#ffffff24; box-shadow:0 6px 20px rgba(0,0,0,.25) }
+.burger:focus-visible{ outline:2px solid #e11d2e; outline-offset:2px }
 
 .burger span{
   width:20px; height:2px; border-radius:2px; background:#fff;
+  transition:transform .25s ease, opacity .2s ease;
 }
-.burger .l2{ margin:5px 0; }
+.burger .l2{ margin:5px 0 }
 
-/* MOBILE: deixa tudo bem compacto */
-@media (max-width: 480px){
-  .btn-login{ padding:8px 12px; font-size:13px; }
-  .burger{ width:40px; height:36px; }
+/* Anima para “X” quando o painel está aberto */
+.burger[aria-expanded="true"] .l1{ transform:translateY(7px) rotate(45deg) }
+.burger[aria-expanded="true"] .l2{ opacity:0 }
+.burger[aria-expanded="true"] .l3{ transform:translateY(-7px) rotate(-45deg) }
+
+/* ===== Backdrop ===== */
+.menu-backdrop{
+  position:fixed; inset:0; z-index:1000;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(6px);
+  opacity:0; pointer-events:none; transition:opacity .25s ease;
+}
+.menu-backdrop.is-open{ opacity:1; pointer-events:auto }
+
+/* ===== Painel lateral (drawer) ===== */
+:root{ --header-h:64px }
+.menu-panel{
+  position:fixed; right:0; top:var(--header-h); /* começa abaixo do header */
+  height:calc(100dvh - var(--header-h));
+  width:min(88vw, 340px);
+  z-index:1002;
+  background:#0c0c10ee; backdrop-filter:blur(10px);
+  border-left:1px solid #ffffff18;
+  box-shadow:-24px 0 48px rgba(0,0,0,.5);
+
+  transform:translateX(110%); opacity:0; pointer-events:none;
+  transition:transform .28s ease, opacity .2s ease;
+}
+.menu-panel.is-open{ transform:translateX(0); opacity:1; pointer-events:auto }
+
+/* Cabeçalho do menu */
+.menu-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 16px; border-bottom:1px solid #ffffff12; color:#fff;
+  font:800 14px/1 Inter, system-ui;
+}
+.menu-close{
+  width:34px; height:34px; border-radius:10px; cursor:pointer;
+  border:1px solid #ffffff24; background:#141418; color:#fff;
+}
+.menu-close:hover{ background:#19191f }
+
+/* Lista de links (sem azul/sub-linha) */
+.menu-list{ list-style:none; padding:12px 10px 18px; margin:0; display:grid; gap:6px }
+.menu-list a{
+  display:block; padding:10px 12px; border-radius:10px;
+  color:#e7e7ec; text-decoration:none; font:600 15px/1.2 Inter, system-ui;
+}
+.menu-list a:hover{ background:#15151a; color:#fff }
+
+/* Compacta no mobile pequeno */
+@media (max-width:480px){
+  .btn-login{ padding:8px 12px; font-size:13px }
+  .burger{ width:40px; height:36px }
 }
     /* HERO */
     .hero{padding:72px 0 40px;display:flex;flex-direction:column;align-items:center}
@@ -761,7 +798,13 @@ body::before {
    ========================= */
 @media (max-width: 1024px){
   .wrap{ width: min(100%, 94%); }
-  .site-header .nav-bar{ padding: 12px 0; }
+
+  /* NÃO zere o padding lateral do header */
+  .site-header .nav-bar{
+    padding: 0 16px;              /* antes estava 12px 0 (ruim no mobile) */
+    justify-content: space-between;
+  }
+
   .nav-logo img{ height: 30px; }
   .btn-login{ padding: 9px 14px; font-size: 13px; }
   .burger{ width: 40px; height: 36px; }
@@ -774,10 +817,11 @@ body::before {
   .hero h1{ font-size: clamp(24px, 7vw, 30px); }
   .hero .media-card{ border-radius: 16px; margin-bottom: 14px; }
   .hero p{ padding: 0 8px; font-size: 14px; line-height: 1.6; }
+
+  /* botões um pouco menores */
   .btn-xxl, .cta{ padding: 12px 20px; border-radius: 12px; font-size: 14px; }
 
-  /* header: só burger + login à direita já está OK. 
-     Se quiser esconder um menu horizontal antigo, garanta que não aparece: */
+  /* Se existir um menu horizontal antigo, esconda */
   .nav-menu-desktop{ display: none !important; }
 }
 
