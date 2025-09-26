@@ -103,110 +103,79 @@ body::before {
   margin: 0 auto;
 }
 
-  /* ===== HEADER FIXO ===== */
-:root{
-  --header-h: 64px; /* altura do header, ajuste se necessário */
+  /* ===== HEADER L/R LAYOUT ===== */
+.site-header{
+  /* escolha: sticky para colar no topo quando alcançar,
+     ou remova para rolar junto do conteúdo */
+  position: sticky; top: 0; z-index: 1001;
+  background: #0b0b0fd0;           /* leve transparência */
+  backdrop-filter: blur(6px);
+  border-bottom: 1px solid #ffffff12;
 }
 
-header{
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  height: var(--header-h);
-  z-index: 1001;
-
-  background:#0b0b0fd9;        /* fundo levemente translúcido */
-  backdrop-filter: blur(8px);   /* efeito de vidro fosco */
-  border-bottom:1px solid #ffffff12;
-
+.nav{
+  height: 64px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px;
+  gap: 16px;
 }
 
-/* Compensa a altura do header para o conteúdo não ficar escondido */
-body{
-  margin:0;
-  padding-top: var(--header-h);
+/* Logo à esquerda */
+.brand{ 
+  display: inline-flex; align-items: center; gap: 10px; 
+  text-decoration: none;
+}
+.brand-logo{ width: 34px; height: 34px; display:block; }
+.brand-text{ 
+  color:#fff; 
+  font: 800 16px/1.1 Unbounded, Inter, system-ui, Arial, sans-serif;
+}
+.brand-text b{ color: var(--red); }
+
+/* Esconde o texto da marca no mobile (só o ícone) */
+@media (max-width: 720px){
+  .brand-text{ display:none; }
 }
 
-/* ===== Botão login ===== */
+/* Direita: botão + burger */
+.nav-actions{
+  display: inline-flex; align-items: center; gap: 12px;
+}
+
+/* Botão Login (reaproveita seu estilo, só garantindo dimensões) */
 .btn-login{
   padding:10px 16px; border-radius:10px; color:#fff; text-decoration:none;
   font:700 14px/1 Inter, system-ui; letter-spacing:.2px;
   background:linear-gradient(90deg,#e11d2e,#b90f1f);
   box-shadow:0 10px 24px rgba(225,29,46,.25);
   transition:filter .2s ease, transform .08s ease;
+  white-space: nowrap;
 }
 .btn-login:hover{ filter:brightness(1.05); }
 .btn-login:active{ transform:translateY(1px); }
 
-/* ===== Burger ===== */
+/* ===== BURGER (3 barras certinhas) ===== */
 .burger{
-  display:inline-flex; align-items:center; justify-content:center;
-  width:44px; height:40px; border-radius:12px; cursor:pointer;
-  border:1px solid #ffffff18; background:#121216;
+  display:inline-grid; place-items:center;
+  width:44px; height:40px; cursor:pointer;
+  border-radius:12px; border:1px solid #ffffff18; background:#121216;
   transition:background .2s ease, border-color .2s ease, box-shadow .2s ease;
 }
 .burger:hover{ background:#15151a; border-color:#ffffff24; box-shadow:0 6px 20px rgba(0,0,0,.25); }
 .burger:focus-visible{ outline:2px solid #e11d2e; outline-offset:2px; }
-.burger span{ display:block; width:20px; height:2px; background:#fff; border-radius:2px; }
-.burger .l2{ margin:5px 0; }
 
-/* ===== Backdrop ===== */
-.menu-backdrop{
-  position:fixed; inset:0;
-  background:rgba(0,0,0,.55);
-  backdrop-filter:blur(6px);
-  opacity:0; pointer-events:none;
-  transition:opacity .25s ease;
-  z-index:999;
+.burger span{
+  display:block; width:22px; height:2px; background:#fff; border-radius:2px;
 }
-.menu-backdrop.is-open{ opacity:1; pointer-events:auto; }
+.burger span:nth-child(2){ margin:6px 0; }  /* espaçamento central */
 
-/* ===== Painel ===== */
-.menu-panel{
-  position:fixed; top:0; right:0; bottom:0;
-  width:min(320px, 86vw);
-  background:#0b0b0fe6;
-  backdrop-filter: blur(10px);
-  border-left:1px solid #ffffff14;
-  box-shadow:-24px 0 48px rgba(0,0,0,.5);
-
-  transform: translateX(10px);
-  opacity:0; pointer-events:none;
-
-  transition: opacity .2s ease, transform .2s ease;
-  z-index:1000;
-  display:flex; flex-direction:column;
+/* (Opcional) diminuir o botão no mobile */
+@media (max-width: 400px){
+  .btn-login{ padding:9px 14px; font-size:13px; }
+  .burger{ width:42px; height:38px; }
+  .burger span{ width:20px; }
 }
-.menu-panel.is-open{
-  transform: translateX(0);
-  opacity:1; pointer-events:auto;
-}
-
-/* Cabeçalho do menu */
-.menu-head{
-  display:flex; align-items:center; justify-content:space-between;
-  padding:16px 18px; border-bottom:1px solid #ffffff14; color:#fff;
-  font:800 14px/1 Inter, system-ui;
-}
-.menu-close{
-  border:1px solid #ffffff18; background:#141418; color:#fff;
-  width:36px; height:32px; border-radius:8px; cursor:pointer;
-}
-.menu-close:hover{ background:#19191f; }
-
-/* Links */
-.menu-list{ list-style:none; margin:0; padding:12px 10px 20px; display:grid; gap:6px; }
-.menu-list a{
-  display:block; padding:12px; border-radius:10px;
-  color:#e9e9ee; text-decoration:none; font:600 15px/1.2 Inter, sans-serif;
-}
-.menu-list a:hover{ background:#15151a; color:#fff; }
-
-/* Travar scroll no body */
-.no-scroll{ overflow:hidden; }
 
 
     /* HERO */
