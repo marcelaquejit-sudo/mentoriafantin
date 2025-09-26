@@ -924,7 +924,14 @@ header{ z-index:1001; position:sticky; top:0; }
 @media (prefers-reduced-motion: reduce){
   *{ animation: none !important; transition: none !important; }
 }
-
+/* antes estava sticky; agora fica estático (rola junto com a página) */
+header{
+  position: static;   /* <— era sticky */
+  top: auto;
+  background:#0b0b0f; /* mantém o mesmo fundo */
+  border-bottom:1px solid #ffffff12;
+  z-index: 5;         /* pode até remover o z-index se quiser */
+}
   </style>
 
 <!-- Canonical -->
