@@ -948,6 +948,74 @@ body::before {
   *{ animation: none !important; transition: none !important; }
 }
 
+
+/* ==================================================
+   FORÇANDO ================================================== */
+
+/* Garante que qualquer [hidden] realmente suma */
+[hidden]{ display:none !important; }
+
+/* Backdrop (escurece o fundo + blur) */
+.menu-backdrop{
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.55);
+  backdrop-filter: blur(6px);
+  opacity:0; pointer-events:none;
+  transition:opacity .25s ease;
+  z-index:1990;
+}
+.menu-backdrop.is-open{ opacity:1; pointer-events:auto; }
+
+/* Painel lateral (direita) – alto nível de especificidade */
+#menu-panel.menu-panel{
+  position:fixed !important; 
+  top:0; right:0; bottom:0; left:auto;
+  width:min(320px,86vw);
+  background:#0b0b0fe6;
+  backdrop-filter: blur(10px);
+  border-left:1px solid #ffffff14;
+  box-shadow:-24px 0 48px rgba(0,0,0,.5);
+
+  /* estado fechado */
+  transform: translateX(100%);
+  opacity:0; pointer-events:none;
+
+  transition: transform .25s ease, opacity .2s ease;
+  z-index:2000;
+}
+#menu-panel.menu-panel.is-open{
+  transform: translateX(0);
+  opacity:1; pointer-events:auto;
+}
+
+/* Cabeçalho do painel */
+#menu-panel .menu-head{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:16px; border-bottom:1px solid #ffffff14; color:#fff;
+  font:800 14px/1 Inter, system-ui;
+}
+#menu-panel .menu-close{
+  width:36px; height:32px; border-radius:8px; cursor:pointer;
+  border:1px solid #ffffff18; background:#141418; color:#fff;
+}
+#menu-panel .menu-close:hover{ background:#19191f; }
+
+/* Lista de links */
+#menu-panel .menu-list{
+  list-style:none;               /* tira os bullets */
+  margin:0; padding:12px;
+  display:grid; gap:8px;
+}
+#menu-panel .menu-list a{
+  display:block; padding:12px; border-radius:10px;
+  color:#e9e9ee; text-decoration:none;   /* sem sublinhado e sem azul padrão */
+  font:600 15px/1.2 Inter, system-ui;
+}
+#menu-panel .menu-list a:hover{
+  background:#15151a; color:#fff;
+}
+
+
   </style>
 
 <!-- Canonical -->
