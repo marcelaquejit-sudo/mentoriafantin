@@ -103,7 +103,34 @@ body::before {
   margin: 0 auto;
 }
 
-  /* Botão login */
+  /* ===== HEADER FIXO ===== */
+:root{
+  --header-h: 64px; /* altura do header, ajuste se necessário */
+}
+
+header{
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--header-h);
+  z-index: 1001;
+
+  background:#0b0b0fd9;        /* fundo levemente translúcido */
+  backdrop-filter: blur(8px);   /* efeito de vidro fosco */
+  border-bottom:1px solid #ffffff12;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+/* Compensa a altura do header para o conteúdo não ficar escondido */
+body{
+  margin:0;
+  padding-top: var(--header-h);
+}
+
+/* ===== Botão login ===== */
 .btn-login{
   padding:10px 16px; border-radius:10px; color:#fff; text-decoration:none;
   font:700 14px/1 Inter, system-ui; letter-spacing:.2px;
@@ -114,7 +141,7 @@ body::before {
 .btn-login:hover{ filter:brightness(1.05); }
 .btn-login:active{ transform:translateY(1px); }
 
-/* ====== Burger ====== */
+/* ===== Burger ===== */
 .burger{
   display:inline-flex; align-items:center; justify-content:center;
   width:44px; height:40px; border-radius:12px; cursor:pointer;
@@ -124,29 +151,28 @@ body::before {
 .burger:hover{ background:#15151a; border-color:#ffffff24; box-shadow:0 6px 20px rgba(0,0,0,.25); }
 .burger:focus-visible{ outline:2px solid #e11d2e; outline-offset:2px; }
 .burger span{ display:block; width:20px; height:2px; background:#fff; border-radius:2px; }
-.burger .l2{ margin:5px 0; } /* espaçamento simétrico */
+.burger .l2{ margin:5px 0; }
 
-/* ====== Backdrop (único) ====== */
+/* ===== Backdrop ===== */
 .menu-backdrop{
   position:fixed; inset:0;
-  background:rgba(0,0,0,.55);                /* escurece */
-  backdrop-filter:blur(6px);                  /* blur */
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(6px);
   opacity:0; pointer-events:none;
   transition:opacity .25s ease;
   z-index:999;
 }
 .menu-backdrop.is-open{ opacity:1; pointer-events:auto; }
 
-/* ====== Painel (único) ====== */
+/* ===== Painel ===== */
 .menu-panel{
   position:fixed; top:0; right:0; bottom:0;
   width:min(320px, 86vw);
-  background:#0b0b0fe6;                       /* com alpha p/ blur funcionar */
+  background:#0b0b0fe6;
   backdrop-filter: blur(10px);
   border-left:1px solid #ffffff14;
   box-shadow:-24px 0 48px rgba(0,0,0,.5);
 
-  /* estado inicial antes da animação */
   transform: translateX(10px);
   opacity:0; pointer-events:none;
 
@@ -171,7 +197,7 @@ body::before {
 }
 .menu-close:hover{ background:#19191f; }
 
-/* Links do menu */
+/* Links */
 .menu-list{ list-style:none; margin:0; padding:12px 10px 20px; display:grid; gap:6px; }
 .menu-list a{
   display:block; padding:12px; border-radius:10px;
@@ -179,13 +205,8 @@ body::before {
 }
 .menu-list a:hover{ background:#15151a; color:#fff; }
 
-/* Trava scroll quando aberto */
+/* Travar scroll no body */
 .no-scroll{ overflow:hidden; }
-
-/* Opcional: se o seu header for sticky, garanta que ele fique acima do conteúdo */
-header{ z-index:1001; position:sticky; top:0; }
-
-
 
 
     /* HERO */
@@ -924,14 +945,7 @@ header{ z-index:1001; position:sticky; top:0; }
 @media (prefers-reduced-motion: reduce){
   *{ animation: none !important; transition: none !important; }
 }
-/* antes estava sticky; agora fica estático (rola junto com a página) */
-header{
-  position: static;   /* <— era sticky */
-  top: auto;
-  background:#0b0b0f; /* mantém o mesmo fundo */
-  border-bottom:1px solid #ffffff12;
-  z-index: 5;         /* pode até remover o z-index se quiser */
-}
+
   </style>
 
 <!-- Canonical -->
