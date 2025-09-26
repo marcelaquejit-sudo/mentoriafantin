@@ -103,47 +103,39 @@ body::before {
   margin: 0 auto;
 }
 
-  /* ===== HEADER L/R LAYOUT ===== */
+  /* ===== HEADER ===== */
 .site-header{
-  /* escolha: sticky para colar no topo quando alcançar,
-     ou remova para rolar junto do conteúdo */
-  position: sticky; top: 0; z-index: 1001;
-  background: #0b0b0fd0;           /* leve transparência */
+  position: sticky; /* cola no topo, se quiser que role junto só remova */
+  top: 0; left: 0; right: 0;
+  z-index: 1001;
+  background:#0b0b0fd0;
   backdrop-filter: blur(6px);
-  border-bottom: 1px solid #ffffff12;
+  border-bottom:1px solid #ffffff12;
 }
 
-.nav{
-  height: 64px;
+.nav-bar{
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  height: 64px;
+  padding: 0 16px;
 }
 
-/* Logo à esquerda */
-.brand{ 
-  display: inline-flex; align-items: center; gap: 10px; 
-  text-decoration: none;
-}
-.brand-logo{ width: 34px; height: 34px; display:block; }
-.brand-text{ 
-  color:#fff; 
-  font: 800 16px/1.1 Unbounded, Inter, system-ui, Arial, sans-serif;
-}
-.brand-text b{ color: var(--red); }
-
-/* Esconde o texto da marca no mobile (só o ícone) */
-@media (max-width: 720px){
-  .brand-text{ display:none; }
+/* LOGO */
+.nav-logo img{
+  display:block;
+  height: 36px; 
+  width:auto;
 }
 
-/* Direita: botão + burger */
+/* AÇÕES (direita) */
 .nav-actions{
-  display: inline-flex; align-items: center; gap: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-/* Botão Login (reaproveita seu estilo, só garantindo dimensões) */
+/* BOTÃO LOGIN */
 .btn-login{
   padding:10px 16px; border-radius:10px; color:#fff; text-decoration:none;
   font:700 14px/1 Inter, system-ui; letter-spacing:.2px;
@@ -155,29 +147,26 @@ body::before {
 .btn-login:hover{ filter:brightness(1.05); }
 .btn-login:active{ transform:translateY(1px); }
 
-/* ===== BURGER (3 barras certinhas) ===== */
+/* ===== BURGER ===== */
 .burger{
-  display:inline-grid; place-items:center;
-  width:44px; height:40px; cursor:pointer;
-  border-radius:12px; border:1px solid #ffffff18; background:#121216;
+  display:flex; flex-direction:column; justify-content:center; align-items:center;
+  width:44px; height:40px; border-radius:12px; cursor:pointer;
+  border:1px solid #ffffff18; background:#121216;
   transition:background .2s ease, border-color .2s ease, box-shadow .2s ease;
 }
 .burger:hover{ background:#15151a; border-color:#ffffff24; box-shadow:0 6px 20px rgba(0,0,0,.25); }
 .burger:focus-visible{ outline:2px solid #e11d2e; outline-offset:2px; }
 
 .burger span{
-  display:block; width:22px; height:2px; background:#fff; border-radius:2px;
+  width:20px; height:2px; border-radius:2px; background:#fff;
 }
-.burger span:nth-child(2){ margin:6px 0; }  /* espaçamento central */
+.burger .l2{ margin:5px 0; }
 
-/* (Opcional) diminuir o botão no mobile */
-@media (max-width: 400px){
-  .btn-login{ padding:9px 14px; font-size:13px; }
-  .burger{ width:42px; height:38px; }
-  .burger span{ width:20px; }
+/* MOBILE: deixa tudo bem compacto */
+@media (max-width: 480px){
+  .btn-login{ padding:8px 12px; font-size:13px; }
+  .burger{ width:40px; height:36px; }
 }
-
-
     /* HERO */
     .hero{padding:72px 0 40px;display:flex;flex-direction:column;align-items:center}
     .hero h1{font:900 clamp(30px,6vw,52px)/1.2 Unbounded,Inter,sans-serif;margin:0 0 22px;text-transform:uppercase}
