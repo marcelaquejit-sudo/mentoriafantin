@@ -199,9 +199,6 @@ body::before {
   color:#e7e7ec; text-decoration:none; font:600 15px/1.2 Inter, system-ui;
 }
 
-
-
-
 /* Compacta no mobile pequeno */
 @media (max-width:480px){
   .btn-login{ padding:8px 12px; font-size:13px }
@@ -1239,7 +1236,180 @@ body::before {
       </div>
     </div>
   </section>
+<section class="case-hero" id="aprovacao-carolina">
+  <div class="container">
 
+    <div class="content">
+      <!-- ESQUERDA – VÍDEO 9:16 (menor) -->
+      <div class="col video-col">
+        <div class="video-frame">
+          <video id="videoCarolina" class="video-el" muted playsinline preload="metadata" poster="img/thumb-story.jpg">
+            <source src="img/Carolina.mp4" type="video/mp4">
+          </video>
+          <button class="unmute" aria-label="Ativar som">🔊</button>
+        </div>
+      </div>
+
+      <!-- DIREITA – CARD COM BLUR + PROVA + CTA -->
+      <div class="col text-col">
+        <div class="desc-card">
+          <p class="lead">
+             <div class="head">
+            <span class="badge-gold">🏆 ALUNA APROVADA EM 1º LUGAR</span>
+            <h2 class="title-gold">CONCURSO CHAPECÓ</h2>
+           <p class="lead">
+            <strong>CAROLINA ANTUNES É</strong><br>
+            ALUNA DA <strong>MENTORIA FANTIN</strong><br>
+            E CONQUISTOU O <strong>1º LUGAR NO</strong><br>
+            CONCURSO PARA <strong>POLICIA MUNICIPAL</strong><br>
+            <span class="edit">EDITAL 001/2025</span>
+          </p>
+
+          </p>
+        </div>
+
+        <figure class="proof">
+          <img src="img/fepese.jpeg" alt="Resultado FEPESE — Chapecó (Edital 001/2025)">
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+/* Autoplay ao entrar; pausa ao sair. Botão liga/desliga som. */
+(function(){
+  const section = document.querySelector('#aprovacao-carolina');
+  const video   = document.querySelector('#videoCarolina');
+  const btn     = section.querySelector('.unmute');
+  if(!section || !video) return;
+
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(async e=>{
+      if(e.isIntersecting){ try{ await video.play(); }catch(_){}} else { video.pause(); }
+    });
+  }, {threshold: .55});
+  io.observe(section);
+
+  btn.addEventListener('click', async ()=>{
+    video.muted = !video.muted;
+    btn.textContent = video.muted ? '🔇' : '🔊';
+    try{ await video.play(); }catch(_){}
+  });
+})();
+</script>
+
+<style>
+/* ===== BASE ===== */
+:root{
+  --text:#fff;
+  --text-dim:#ffffffcc;
+  --stroke:#ffffff1a;
+  --glass:#00000066;          /* preto translúcido */
+  --radius:18px;
+  --shadow:0 10px 30px rgba(0,0,0,.45);
+  --gold1:#ffe79a;            /* dourado */
+  --gold2:#f7c24a;
+}
+
+.case-hero{
+  color:var(--text);
+  background:transparent;     /* sem fundo: herda do site */
+  min-height:100vh;
+  display:grid; align-content:center;
+}
+.container{max-width:1100px; margin:0 auto; padding:32px 24px}
+
+/* ===== HEAD: badge + título dourados ===== */
+.head{ text-align:center; margin-bottom:20px }
+.badge-gold{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:8px 14px; border-radius:999px;
+  background:linear-gradient(180deg,var(--gold1),var(--gold2));
+  color:#1a1206; font:800 12px/1 "Inter",system-ui; letter-spacing:.2px;
+  box-shadow:0 6px 18px rgba(0,0,0,.35), inset 0 1px 0 #fff6, 0 0 22px rgba(247,194,74,.25);
+}
+.title-gold{
+  margin-top:10px;
+  font:900 clamp(28px,5vw,40px)/1.1 "Inter",system-ui;
+  background:linear-gradient(180deg,var(--gold1),var(--gold2));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  text-shadow:0 10px 40px rgba(0,0,0,.45);
+}
+
+/* ===== GRID ===== */
+.content{
+  display:grid; grid-template-columns: 420fr 580fr; gap:32px; align-items:center;
+}
+
+/* ===== VÍDEO (menor) ===== */
+.video-frame{
+  position:relative; overflow:hidden; border-radius:16px; background:#000;
+  width:clamp(220px, 28vw, 340px);  /* menor que antes */
+  aspect-ratio:9/16; margin-inline:auto; box-shadow:var(--shadow);
+}
+.video-el{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
+.unmute{
+  position:absolute; right:10px; bottom:10px; cursor:pointer;
+  font-size:14px; padding:8px 10px; border-radius:999px;
+  color:#fff; background:#00000080; border:1px solid var(--stroke); backdrop-filter:blur(4px);
+}
+
+/* ===== CARD DE DESCRIÇÃO (blur preto) ===== */
+.desc-card{
+  background:var(--glass);
+  backdrop-filter:blur(10px);
+  border:1px solid var(--stroke);
+  border-radius:14px;
+  padding:16px 18px;
+  box-shadow:var(--shadow);
+}
+.text-col{ display:grid; gap:16px; align-content:start }
+.lead{ font:500 clamp(16px,1.6vw,18px)/1.7 "Inter"; color:var(--text-dim) }
+
+/* ===== PROVA + CTA ===== */
+.proof{ display:grid; gap:8px; justify-items:start }
+.proof img{
+  width:100%; max-width:480px; border-radius:12px; border:1px solid var(--stroke); background:#0a0a0a; box-shadow:var(--shadow)
+}
+.proof figcaption{ font:700 12px/1.5 "Inter"; color:#ffffffa6 }
+
+.cta{
+  display:inline-block; padding:14px 22px; border-radius:12px; text-decoration:none;
+  color:#111; background:linear-gradient(180deg,#fff,#e8e8e8);
+  border:1px solid #ffffff33; box-shadow:0 14px 34px rgba(0,0,0,.55);
+  font:900 15px/1 "Inter"; letter-spacing:.2px;
+  transition:transform .15s ease, box-shadow .2s ease, filter .2s ease;
+}
+.cta:hover{ transform:translateY(-2px); box-shadow:0 18px 44px rgba(0,0,0,.65); filter:saturate(108%) }
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 980px){
+  .content{ grid-template-columns:1fr; gap:22px }
+  .text-col{ text-align:center; justify-items:center }
+  .proof{ justify-items:center }
+}
+/* Base da seção: Outfit 400 por padrão */
+#aprovacao-carolina,
+#aprovacao-carolina * {
+  font-family: "Outfit", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Título */
+#aprovacao-carolina .title-gold,
+#aprovacao-carolina h1.title,
+#aprovacao-carolina h2.title {
+  font-weight: 800 !important;  /* Outfit 800 */
+}
+
+/* Descrição */
+#aprovacao-carolina .lead {
+  font-weight: 400 !important;  /* Outfit 400 */
+}
+
+</style>
  <!-- FEEDBACKS -->
 <section class="feedbacks" id="feedbacks">
   <div class="wrap">
@@ -1853,6 +2023,7 @@ body::before {
 
 </body>
 </html>
+
 
 
 
