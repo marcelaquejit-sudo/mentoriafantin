@@ -784,7 +784,8 @@ body::before {
   background:linear-gradient(180deg,#e11d2e,#b31322);
   border-radius:14px;
   font:700 15px/1.3 Inter, sans-serif;
-  color:#fff;
+  background: linear-gradient(90deg, #e11d2e, #b90f1f);
+  box-shadow: 0 10px 24px rgba(225, 29, 46, .25);
   text-decoration:none;
   box-shadow:0 6px 18px rgba(225,29,46,.35);
   transition:all .25s ease;
@@ -1015,6 +1016,23 @@ body::before {
   background:#15151a; color #fff;
 }
 
+/* Tipografia global para botões */
+button,
+.btn,
+[role="button"],
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+a.button,
+a.btn,
+.cta,
+.mf-cta {
+  font-family: "Outfit", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif !important;
+  font-weight: 600 !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: .2px; /* opcional, pode tirar se não quiser */
+}
 
   </style>
 
@@ -2023,6 +2041,7 @@ body::before {
 
 </body>
 </html>
+
 
 
 
